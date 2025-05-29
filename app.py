@@ -44,7 +44,6 @@ def download_file(file_id, filename):
         status, done = downloader.next_chunk()
     print(f'Downloaded: {filename}')
 
-@app.before_first_request
 def sync_files():
     for filename, file_id in FILES.items():
         download_file(file_id, filename)
@@ -79,5 +78,6 @@ def home():
     return "Puddin's POP Chatbot Test is running. POST to /predict with JSON data."
 
 if __name__ == "__main__":
+    sync_files()
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
